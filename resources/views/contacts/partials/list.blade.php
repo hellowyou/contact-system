@@ -20,12 +20,11 @@
 <script>
     (function ($) {
         $(document).ready(function () {
-            $('.delete').click(function (e) {
+            $('form.delete').submit(function (e) {
                 e.preventDefault();
-                var $el = $(e);
 
                 if (confirm('Confirm contact deletion')) {
-                    $el.submit()
+                    $(this).unbind('submit').submit()
                 }
             })
         });
