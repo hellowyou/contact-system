@@ -74,8 +74,12 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(EditRequest $contact)
+    public function edit(Contact $contact)
     {
+        if ($contact->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('contacts.edit', compact('contact'));
     }
 
