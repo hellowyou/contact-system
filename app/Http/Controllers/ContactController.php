@@ -103,9 +103,11 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Contact $contact)
     {
-        $contact = Contact::findOrFail($id);
+        if ($contact->user_id !== auth()->id()) {
+            abort(403);
+        }
 
         $contact->delete();
 
