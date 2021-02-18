@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', 'contacts');
+
+
+Route::resource('contacts', ContactController::class)->middleware('auth');
+
+
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('login.authenticate');
+
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register.show');
+Route::post('/register', [AuthController::class, 'signup'])->name('register.signup');
+Route::view('/thank-you', 'thank-you')->name('thank-you');
+
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
